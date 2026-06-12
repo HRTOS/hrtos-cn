@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目历程 - HRTOS</title>
+
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    body{
+        font-family:"Microsoft YaHei",sans-serif;
+        background:#ffffff;
+        color:#333;
+        line-height:1.9;
+    }
+
+    .container{
+        width:90%;
+        max-width:900px;
+        margin:auto;
+    }
+
+    header{
+        padding:30px 0;
+        border-bottom:1px solid #eee;
+    }
+
+    nav{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+
+    .logo{
+        font-size:28px;
+        font-weight:bold;
+    }
+
+    .menu a{
+        margin-left:30px;
+        text-decoration:none;
+        color:#555;
+    }
+
+    .menu a:hover{
+        color:#000;
+    }
+
+    .hero{
+        text-align:center;
+        padding:80px 20px;
+    }
+
+    .hero h1{
+        font-size:48px;
+        margin-bottom:20px;
+    }
+
+    .hero p{
+        color:#666;
+        font-size:18px;
+    }
+
+    .timeline{
+        margin:60px auto;
+        border-left:2px solid #ddd;
+        padding-left:40px;
+    }
+
+    .item{
+        margin-bottom:60px;
+        position:relative;
+    }
+
+    .item::before{
+        content:"";
+        position:absolute;
+        left:-49px;
+        top:8px;
+        width:14px;
+        height:14px;
+        background:#333;
+        border-radius:50%;
+    }
+
+    .year{
+        font-size:28px;
+        font-weight:bold;
+        margin-bottom:15px;
+    }
+
+    .content{
+        color:#555;
+    }
+
+    footer{
+        text-align:center;
+        padding:50px 0;
+        border-top:1px solid #eee;
+        color:#999;
+    }
+</style>
+
+
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <nav>
+            <div class="logo">HRTOS</div>
+
+        <div class="menu">
+            <a href="index.html">首页</a>
+            <a href="journey.html">项目历程</a>
+            <a href="about.html">关于</a>
+        </div>
+    </nav>
+</div>
+
+
+</header>
+
+<section class="hero">
+
+
+<h1>项目历程</h1>
+
+<p>
+    从一次对计算机的好奇，
+    到一个持续多年的实时操作系统项目。
+</p>
+
+
+</section>
+
+<div class="container">
+
+
+<div class="timeline">
+
+    <div class="item">
+        <div class="year">2003</div>
+        <div class="content">
+            第一次接触计算机。
+            虽然当时并不了解程序、操作系统和软件开发，
+            但对计算机内部是如何工作的产生了浓厚兴趣。
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="year">2010</div>
+        <div class="content">
+            开始接触互联网。
+            通过网络了解到更多关于计算机和软件世界的信息，
+            也逐渐萌生学习编程的想法。
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="year">2016</div>
+        <div class="content">
+            正式学习编程。
+            开始系统接触 C 语言、单片机和嵌入式开发，
+            迈出了软件开发道路上的重要一步。
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="year">2017</div>
+        <div class="content">
+            HRTOS 项目正式启动。
+            阅读了大量关于操作系统、嵌入式系统以及实时系统的资料后，
+            决定尝试亲手实现一个属于自己的实时操作系统。
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="year">2018 - 2025</div>
+        <div class="content">
+            项目持续迭代与维护。
+            在工作与学习之余，
+            不断完善任务管理、调度器、同步通信、
+            定时器以及系统架构设计。
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="year">2026</div>
+        <div class="content">
+            HRTOS 进入工程化阶段。
+            建立测试框架，
+            增加单元测试和压力测试，
+            持续提升系统稳定性与可靠性。
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="year">未来</div>
+        <div class="content">
+            HRTOS 将继续长期维护和迭代。
+            完善文档、示例和测试体系，
+            持续探索实时系统与嵌入式软件工程实践。
+        </div>
+    </div>
+
+</div>
+
+
+</div>
+
+<footer>
+    <p>
+        一次兴趣的开始，
+        一段持续至今的探索。
+    </p>
+</footer>
+
+</body>
+</html>
