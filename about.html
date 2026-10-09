@@ -1,281 +1,647 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>关于 HRTOS</title>
 
+    <title>关于 HRTOS - 项目定位、设计理念与长期维护</title>
+    <meta name="description"
+          content="了解 HRTOS 8051 实时操作系统的项目定位、设计理念、工程实践与长期维护策略。项目始于 2017，持续关注实时内核、系统可靠性与工程质量。">
+    <meta name="keywords"
+          content="HRTOS,关于HRTOS,8051 RTOS,8051操作系统,实时操作系统,嵌入式软件">
+    <meta name="theme-color" content="#ffffff">
 
-<style>
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body{
-        font-family:"Microsoft YaHei",sans-serif;
-        background:#ffffff;
-        color:#333;
-        line-height:1.9;
-    }
+        :root {
+            --text: #222;
+            --secondary: #666;
+            --muted: #888;
+            --border: #eaeaea;
+            --surface: #fafafa;
+            --content-width: 1000px;
+        }
 
-    .container{
-        width:90%;
-        max-width:900px;
-        margin:auto;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    header{
-        padding:30px 0;
-        border-bottom:1px solid #eee;
-    }
+        body {
+            font-family:
+                "Microsoft YaHei",
+                "PingFang SC",
+                "Noto Sans CJK SC",
+                sans-serif;
+            background: #fff;
+            color: var(--text);
+            line-height: 1.9;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    nav{
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-    }
+        a {
+            color: inherit;
+        }
 
-    .logo{
-        font-size:28px;
-        font-weight:bold;
-    }
+        a:focus-visible {
+            outline: 2px solid #333;
+            outline-offset: 4px;
+        }
 
-    .menu a{
-        margin-left:30px;
-        text-decoration:none;
-        color:#555;
-    }
+        .container {
+            width: 90%;
+            max-width: var(--content-width);
+            margin: 0 auto;
+        }
 
-    .menu a:hover{
-        color:#000;
-    }
+        /* 导航 */
 
-    .hero{
-        text-align:center;
-        padding:80px 20px;
-    }
+        header {
+            border-bottom: 1px solid var(--border);
+        }
 
-    .hero h1{
-        font-size:48px;
-        margin-bottom:20px;
-    }
+        nav {
+            min-height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
 
-    .hero p{
-        font-size:18px;
-        color:#666;
-    }
+        .logo {
+            font-size: 27px;
+            font-weight: 750;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
 
-    section{
-        padding:40px 0;
-    }
+        .menu {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
 
-    h2{
-        margin-bottom:20px;
-        font-size:30px;
-    }
+        .menu a {
+            color: var(--secondary);
+            font-size: 15px;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
 
-    p{
-        margin-bottom:15px;
-    }
+        .menu a:hover,
+        .menu a[aria-current="page"] {
+            color: #111;
+        }
 
-    .card{
-        background:#fafafa;
-        border:1px solid #eee;
-        padding:25px;
-        margin-top:20px;
-        border-radius:8px;
-    }
+        /* 页面标题 */
 
-    footer{
-        text-align:center;
-        padding:50px 0;
-        border-top:1px solid #eee;
-        color:#999;
-    }
-</style>
+        .hero {
+            padding: 82px 20px 72px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
 
+        .eyebrow {
+            margin-bottom: 14px;
+            color: var(--muted);
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
 
+        .hero h1 {
+            margin-bottom: 18px;
+            font-size: clamp(36px, 5vw, 48px);
+            line-height: 1.3;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--secondary);
+            font-size: 17px;
+        }
+
+        /* 内容区 */
+
+        section {
+            padding: 65px 0;
+        }
+
+        .section-heading {
+            margin-bottom: 18px;
+            font-size: 29px;
+            line-height: 1.45;
+        }
+
+        .section-intro {
+            margin-bottom: 25px;
+            color: var(--secondary);
+            font-size: 16px;
+        }
+
+        .content p {
+            margin-top: 16px;
+            color: #555;
+        }
+
+        /* 设计理念 */
+
+        .principle-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 30px;
+        }
+
+        .principle-card {
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: #fff;
+        }
+
+        .principle-card h3 {
+            margin-bottom: 9px;
+            font-size: 18px;
+            font-weight: 650;
+        }
+
+        .principle-card p {
+            color: var(--secondary);
+            font-size: 15px;
+        }
+
+        /* 当前阶段 */
+
+        .stage-section {
+            background: var(--surface);
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .stage-list {
+            margin-top: 25px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .stage-item {
+            display: grid;
+            grid-template-columns: 180px minmax(0, 1fr);
+            gap: 24px;
+            padding: 21px 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .stage-item h3 {
+            font-size: 16px;
+            font-weight: 650;
+        }
+
+        .stage-item p {
+            color: var(--secondary);
+            font-size: 15px;
+        }
+
+        /* 名称说明 */
+
+        .name-note {
+            margin-top: 25px;
+            padding: 24px;
+            border-left: 3px solid #333;
+            background: var(--surface);
+        }
+
+        .name-note p {
+            color: #555;
+        }
+
+        /* 结尾 */
+
+        .closing {
+            padding: 65px 0;
+            text-align: center;
+        }
+
+        .closing h2 {
+            margin-bottom: 12px;
+            font-size: 27px;
+        }
+
+        .closing p {
+            color: var(--secondary);
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border: 1px solid #333;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 15px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #222;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #444;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+        }
+
+        footer {
+            padding: 35px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        footer p + p {
+            margin-top: 5px;
+        }
+
+        footer a {
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #333;
+        }
+
+        @media (max-width: 760px) {
+            nav {
+                padding: 18px 0;
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .menu {
+                gap: 18px;
+            }
+
+            .menu a {
+                font-size: 14px;
+            }
+
+            .hero {
+                padding: 65px 16px 55px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            section {
+                padding: 48px 0;
+            }
+
+            .section-heading {
+                font-size: 25px;
+            }
+
+            .principle-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .principle-card {
+                padding: 21px;
+            }
+
+            .stage-item {
+                grid-template-columns: 1fr;
+                gap: 5px;
+                padding: 18px 0;
+            }
+
+            .closing {
+                padding: 50px 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 <header>
     <div class="container">
-        <nav>
-            <div class="logo">HRTOS</div>
+        <nav aria-label="主导航">
+            <a class="logo" href="index.html" aria-label="HRTOS 首页">
+                HRTOS
+            </a>
 
-
-        <div class="menu">
-            <a href="index.html">首页</a>
-            <a href="journey.html">项目历程</a>
-            <a href="about.html">关于</a>
-        </div>
-    </nav>
-</div>
-
-
+            <div class="menu">
+                <a href="index.html">首页</a>
+                <a href="https://hrtos.com">官方网站</a>
+                <a href="about.html" aria-current="page">关于项目</a>
+                <a href="journey.html">项目历程</a>
+            </div>
+        </nav>
+    </div>
 </header>
 
-<section class="hero">
+<main>
 
-<h1>关于 HRTOS</h1>
+    <!-- 页面介绍 -->
 
-<p>
-    一个长期维护的实时操作系统项目
-</p>
+    <section class="hero">
+        <div class="container">
 
+            <p class="eyebrow">About HRTOS</p>
 
-</section>
+            <h1>关于 HRTOS</h1>
 
-<div class="container">
+            <p>
+                一个面向 8051 系列单片机、持续维护与打磨的实时操作系统项目。
+                从内核设计出发，逐步完善工程实践与系统验证。
+            </p>
 
+        </div>
+    </section>
 
-<section>
+    <!-- 项目定位 -->
 
-    <h2>项目简介</h2>
+    <section>
+        <div class="container content">
 
-    <p>
-        HRTOS
-        是一个面向 8051 系列单片机的实时操作系统项目。
-        项目名称来源于硬实时操作系统（Hard Real-Time Operating System）的缩写，
-        代表对高质量实时系统的探索与追求。
-        
+            <h2 class="section-heading">项目定位</h2>
 
-    </p>
-    <p>
-        HRTOS 不仅关注功能实现，更重视实时系统中的确定性、可靠性、代码质量以及长期可维护性。
-        项目希望在资源有限的嵌入式环境中，探索如何构建结构清晰、稳定可靠的实时操作系统。
+            <p>
+                HRTOS（Hard Real-Time Operating System）创建于 2017 年，
+                是一个专注于 8051 系列单片机的实时操作系统项目。
+                项目围绕资源受限嵌入式平台的体系结构特点，
+                持续探索实时内核的设计、实现与工程实践。
+            </p>
 
-    </p>
-   
+            <p>
+                8051 平台在存储空间、计算能力和硬件机制等方面具有自身特点。
+                面向这一平台设计操作系统，需要综合考虑任务调度、
+                中断处理、上下文管理、同步通信以及内存使用等问题，
+                而不能简单地将其他架构上的设计直接照搬。
+            </p>
 
-    <p>
-        项目创建于 2017 年，经过多年持续开发与迭代，
-        围绕任务管理、调度机制、同步通信、中断处理、内存管理以及系统可靠性等核心领域不断完善，
-        逐步形成较完整的内核架构、测试体系和开发文档。
-    </p>
+            <p>
+                HRTOS 以这些实际约束为出发点，逐步完善内核机制、
+                开发文档、示例工程与测试验证体系。
+                项目关注的不仅是功能是否实现，
+                也包括实现方式是否合理、运行行为是否可分析，
+                以及系统能否得到长期维护。
+            </p>
 
-   <p>
-每一次架构优化、每一个测试用例完善、每一次问题定位与修复，都是 HRTOS 持续演进的重要组成部分，
-也记录着对实时系统设计理解不断深入的过程。
+            <div class="name-note">
+                <p>
+                    <strong>关于名称</strong>
+                </p>
+                <p>
+                    HRTOS 的名称源于 Hard Real-Time Operating System，
+                    体现了项目对实时性、确定性与系统可靠性的长期追求。
+                    名称本身不代表系统已对所有硬件、配置与应用场景提供严格的硬实时保证；
+                    具体保证范围需要结合实际实现、时序分析与验证结果判断。
+                </p>
+            </div>
 
+        </div>
+    </section>
 
-   </p>
+    <!-- 设计理念 -->
 
-</section>
+    <section>
+        <div class="container">
 
-<section>
+            <h2 class="section-heading">设计理念</h2>
 
-    <h2>设计理念</h2>
+            <p class="section-intro">
+                以清晰的内核设计为基础，以可验证的工程实践为支撑，
+                重视系统能力与长期维护之间的平衡。
+            </p>
 
-    <div class="card">
+            <div class="principle-grid">
 
-        <p><strong>简单</strong></p>
+                <article class="principle-card">
+                    <h3>简单与清晰</h3>
+                    <p>
+                        保持内核结构清晰，明确模块职责，
+                        避免缺乏实际价值的复杂度，
+                        让系统更容易理解、分析和维护。
+                    </p>
+                </article>
 
-        <p>
-            保持清晰的架构设计，
-            避免不必要的复杂度，
-            让系统更容易理解和维护。
-        </p>
+                <article class="principle-card">
+                    <h3>实时性与确定性</h3>
+                    <p>
+                        关注任务调度、中断响应与关键内核路径的运行行为，
+                        在具体硬件与资源约束下持续改善系统的可预测性。
+                    </p>
+                </article>
 
-    </div>
+                <article class="principle-card">
+                    <h3>稳定与可靠</h3>
+                    <p>
+                        重视缺陷修复、边界条件与异常场景，
+                        通过测试和实际运行验证发现问题，
+                        不以功能数量替代系统质量。
+                    </p>
+                </article>
 
-    <div class="card">
+                <article class="principle-card">
+                    <h3>工程化与可维护性</h3>
+                    <p>
+                        将内核、文档、示例和测试视为完整项目的重要组成部分，
+                        控制不必要的变更，降低长期使用与维护成本。
+                    </p>
+                </article>
 
-        <p><strong>稳定</strong></p>
+            </div>
 
-        <p>
-            稳定性优先于功能数量。
-            每一个模块都应经过充分验证与测试。
-        </p>
+        </div>
+    </section>
 
-    </div>
+    <!-- 工程实践 -->
 
-    <div class="card">
+    <section class="stage-section">
+        <div class="container">
 
-        <p><strong>工程化</strong></p>
+            <h2 class="section-heading">工程实践</h2>
 
-        <p>
-            关注代码质量、测试体系、
-            文档建设以及长期维护能力。
-        </p>
+            <p class="section-intro">
+                实时操作系统不仅需要内核机制，
+                也需要相应的文档、测试与维护工作来支撑实际使用。
+            </p>
 
-    </div>
+            <div class="stage-list">
 
-    <div class="card">
+                <div class="stage-item">
+                    <h3>内核设计与实现</h3>
+                    <p>
+                        持续完善任务管理、调度、中断处理、
+                        同步通信与资源管理等内核机制，
+                        关注 8051 平台下的实现约束。
+                    </p>
+                </div>
 
-        <p><strong>持续改进</strong></p>
+                <div class="stage-item">
+                    <h3>测试与验证</h3>
+                    <p>
+                        通过功能测试、压力测试和性能测量，
+                        检查系统在特定测试条件下的实际行为，
+                        为缺陷定位与内核改进提供依据。
+                    </p>
+                </div>
 
-        <p>
-            HRTOS 不是一次性完成的项目，
-            而是一项长期持续演进的工作。
-        </p>
+                <div class="stage-item">
+                    <h3>文档与示例</h3>
+                    <p>
+                        持续完善 API 说明、开发文档与示例工程，
+                        降低开发者理解和使用系统的成本，
+                        让技术能力能够被实际应用。
+                    </p>
+                </div>
 
-    </div>
+                <div class="stage-item">
+                    <h3>长期维护</h3>
+                    <p>
+                        重视版本稳定性、问题修复与变更风险，
+                        让内核与配套资料保持协调，
+                        为长期使用建立更加可靠的基础。
+                    </p>
+                </div>
 
-</section>
+            </div>
+        </div>
+    </section>
 
-<section>
+    <!-- 当前阶段 -->
 
-    <h2>当前阶段</h2>
+    <section>
+        <div class="container content">
 
-    <p>
-        当前开发重点已经从功能实现逐步转向工程质量建设。
-    </p>
+            <h2 class="section-heading">当前阶段</h2>
 
-    <p>
-        包括：
-    </p>
+            <p>
+                随着内核架构逐步完善，HRTOS 的工作重点正在从功能实现，
+                进一步转向稳定性、工程质量与验证体系的建设。
+            </p>
 
-    <p>
-        • 内核稳定性提升<br>
-        • 自动化测试建设<br>
-        • 示例工程完善<br>
-        • 文档体系建设<br>
-        • 长期维护能力优化
-    </p>
+            <p>
+                当前阶段优先关注内核缺陷修复、关键路径验证、
+                文档完善与示例维护。在核心机制没有明确问题、
+                现有设计能够满足目标需求的情况下，
+                不会仅仅为了增加功能或更新版本号而进行架构变更。
+            </p>
 
-</section>
+            <p>
+                对于实时性能与系统可靠性的判断，
+                将尽可能建立在明确的测试条件、实际测量和可复核结果之上。
+                对尚未完成的分析与验证，保持审慎，
+                并逐步补足证据。
+            </p>
 
-<section>
+        </div>
+    </section>
 
-    <h2>未来规划</h2>
+    <!-- 未来方向 -->
 
-    <p>
-        HRTOS 将继续保持长期维护和持续迭代。
-    </p>
+    <section class="stage-section">
+        <div class="container content">
 
-    <p>
-        未来将围绕实时系统、
-        嵌入式软件工程以及系统可靠性持续改进。
-    </p>
+            <h2 class="section-heading">长期方向</h2>
 
-    <p>
-        不追求快速扩张，
-        更关注长期积累与稳定成长。
-    </p>
+            <p>
+                HRTOS 将继续围绕 8051 实时操作系统这一方向，
+                深入完善内核实现、工程文档、示例体系与测试验证能力。
+            </p>
 
-</section>
+            <p>
+                项目不以快速扩张或频繁发布版本为首要目标，
+                而是希望通过长期积累，逐步提高系统的可靠性、
+                可预测性与可维护性。
+            </p>
 
+            <p>
+                对 HRTOS 而言，持续维护不仅意味着项目仍在更新，
+                更意味着认真对待每一次修改、每一个测试结果，
+                以及每一项需要长期承担的维护责任。
+            </p>
 
-</div>
+        </div>
+    </section>
+
+    <!-- 结尾 -->
+
+    <section class="closing">
+        <div class="container">
+
+            <h2>持续学习，持续实践，持续改进</h2>
+
+            <p>
+                了解 HRTOS 的技术资料与项目发展历程。
+            </p>
+
+            <div class="button-group">
+                <a class="btn btn-primary"
+                   href="https://hrtos.com">
+                    访问官方网站
+                </a>
+
+                <a class="btn btn-secondary"
+                   href="journey.html">
+                    查看项目历程
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+</main>
 
 <footer>
-
-
-<p>
-    HRTOS © 2017 - Present
-</p>
-
-<p>
-    持续学习 · 持续实践 · 持续改进
-</p>
-
-
+    <div class="container">
+        <p>HRTOS · 始于 2017</p>
+        <p>面向 8051 的实时操作系统项目</p>
+        <p>
+            <a href="index.html">首页</a>
+            ·
+            <a href="https://hrtos.com">官方网站</a>
+            ·
+            <a href="journey.html">项目历程</a>
+        </p>
+    </div>
 </footer>
 
 </body>
 </html>
+
