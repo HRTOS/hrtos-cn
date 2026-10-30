@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HRTOS 资源导航 - 官方技术文档、API、示例与下载</title>
+  <meta name="description" content="HRTOS 官方资源导航，集中访问 8051 实时操作系统的技术文档、内核架构、API 参考、开发示例、系统模块、学习资料与版本下载。">
+  <meta name="keywords" content="HRTOS,8051操作系统,8051 RTOS,技术文档,API参考,开发示例,Keil C51">
+  <meta name="theme-color" content="#ffffff">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --text: #222; --secondary: #666; --muted: #888;
+      --border: #eaeaea; --surface: #fafafa; --accent: #243b63;
+      --content-width: 1040px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif;
+      background: #fff; color: var(--text); line-height: 1.85;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    a:focus-visible { outline: 2px solid #243b63; outline-offset: 4px; }
+    .container { width: 90%; max-width: var(--content-width); margin: 0 auto; }
+    header { border-bottom: 1px solid var(--border); }
+    nav {
+      min-height: 76px; display: flex; align-items: center;
+      justify-content: space-between; gap: 24px;
+    }
+    .logo {
+      font-size: 27px; font-weight: 750; letter-spacing: 1px;
+      text-decoration: none;
+    }
+    .menu { display: flex; align-items: center; flex-wrap: wrap; gap: 28px; }
+    .menu a {
+      color: var(--secondary); font-size: 14px; text-decoration: none;
+      transition: color .2s ease;
+    }
+    .menu a:hover, .menu a[aria-current="page"] { color: #111; }
+    .hero {
+      padding: 76px 20px 68px; text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .eyebrow {
+      margin-bottom: 13px; color: var(--muted); font-size: 12px;
+      letter-spacing: 3px; text-transform: uppercase;
+    }
+    .hero h1 { margin-bottom: 16px; font-size: clamp(34px,5vw,46px); line-height: 1.3; }
+    .hero p { max-width: 720px; margin: 0 auto; color: var(--secondary); font-size: 16px; }
+    .hero-meta {
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: 9px; margin-top: 25px;
+    }
+    .hero-meta span {
+      padding: 4px 11px; border: 1px solid var(--border);
+      border-radius: 3px; color: #666; font-size: 12px;
+    }
+    section { padding: 55px 0; }
+    .section-heading { margin-bottom: 9px; font-size: 26px; line-height: 1.45; }
+    .section-intro { margin-bottom: 25px; color: var(--secondary); font-size: 15px; }
+    .resource-grid {
+      display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px;
+    }
+    .resource-card {
+      display: block; padding: 21px 23px; border: 1px solid var(--border);
+      border-radius: 4px; background: #fff; text-decoration: none;
+      transition: border-color .2s ease, transform .2s ease, background .2s ease;
+    }
+    .resource-card:hover {
+      border-color: #b8c3d2; background: #fcfdff; transform: translateY(-2px);
+    }
+    .card-top {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 7px;
+    }
+    .resource-card h3 { font-size: 17px; font-weight: 650; }
+    .resource-card p { color: var(--secondary); font-size: 14px; line-height: 1.75; }
+    .card-tag { color: #8792a2; font-size: 11px; letter-spacing: .5px; white-space: nowrap; }
+    .resource-card .arrow { color: #8a96a7; font-size: 17px; }
+    .feature-section {
+      background: var(--surface); border-top: 1px solid #f0f0f0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .quick-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+    .quick-link {
+      padding: 17px 18px; border: 1px solid var(--border);
+      border-radius: 4px; background: #fff; text-decoration: none;
+    }
+    .quick-link strong { display: block; margin-bottom: 4px; font-size: 15px; }
+    .quick-link span { color: var(--secondary); font-size: 13px; }
+    .note {
+      margin-top: 26px; padding: 20px 22px; border-left: 3px solid #344b70;
+      background: #f5f7fa; color: #555; font-size: 14px;
+    }
+    .closing { padding: 60px 0; text-align: center; }
+    .closing h2 { margin-bottom: 10px; font-size: 25px; }
+    .closing p { color: var(--secondary); font-size: 15px; }
+    .button-group {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 12px; margin-top: 25px;
+    }
+    .btn {
+      display: inline-block; padding: 10px 23px; border: 1px solid #333;
+      border-radius: 3px; text-decoration: none; font-size: 14px;
+      transition: background .2s ease,color .2s ease;
+    }
+    .btn-primary { background: #222; color: #fff; }
+    .btn-primary:hover { background: #444; }
+    .btn-secondary:hover { background: #f5f5f5; }
+    footer {
+      padding: 30px 0; border-top: 1px solid var(--border);
+      text-align: center; color: var(--muted); font-size: 12px;
+    }
+    footer p + p { margin-top: 4px; }
+    footer a { text-decoration: none; }
+    footer a:hover { color: #333; }
+    @media (max-width: 760px) {
+      nav { padding: 17px 0; align-items: flex-start; flex-direction: column; gap: 10px; }
+      .menu { gap: 17px; }
+      .menu a { font-size: 13px; }
+      .hero { padding: 58px 14px 48px; }
+      .hero p { font-size: 14px; }
+      section { padding: 42px 0; }
+      .section-heading { font-size: 23px; }
+      .resource-grid { grid-template-columns: 1fr; gap: 11px; }
+      .quick-grid { grid-template-columns: 1fr; }
+      .resource-card { padding: 19px; }
+      .closing { padding: 46px 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *,*::before,*::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <nav aria-label="主导航">
+      <a class="logo" href="index.html" aria-label="HRTOS 中文介绍网站首页">HRTOS</a>
+      <div class="menu">
+        <a href="index.html">首页</a>
+        <a href="https://hrtos.com">官方网站</a>
+        <a href="about.html">关于项目</a>
+        <a href="journey.html">项目历程</a>
+        <a href="links.html" aria-current="page">资源导航</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">HRTOS RESOURCE CENTER</p>
+      <h1>HRTOS 资源导航</h1>
+      <p>
+        从系统架构、内核机制到 API 参考、开发示例与版本下载，
+        集中访问 HRTOS 官方技术资料，快速找到所需内容。
+      </p>
+      <div class="hero-meta">
+        <span>8051 / MCS-51</span>
+        <span>Keil C51</span>
+        <span>技术文档</span>
+        <span>持续维护</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-heading">技术文档</h2>
+      <p class="section-intro">了解 HRTOS 的整体设计、内核结构与系统运行机制。</p>
+      <div class="resource-grid">
+        <a class="resource-card" href="https://hrtos.com/docs/index.html">
+          <div class="card-top"><h3>文档中心</h3><span class="card-tag">DOCUMENTATION ↗</span></div>
+          <p>官方技术文档入口，集中浏览系统手册、开发资料及各类技术说明。</p>
+        </a>
+        <a class="resource-card" href="https://hrtos.com/docs/guide/index.html">
+          <div class="card-top"><h3>内核开发指南</h3><span class="card-tag">KERNEL GUIDE ↗</span></div>
+          <p>从内核概览、目录结构、启动流程到任务、调度、通信、中断与移植设计，逐步理解系统内部实现。</p>
+        </a>
+        <a class="resource-card" href="https://hrtos.com/docs/architecture/index.html">
+          <div class="card-top"><h3>系统架构</h3><span class="card-tag">ARCHITECTURE ↗</span></div>
+          <p>查看内核结构、调度模型、内存模型、中断模型与通信机制等架构资料。</p>
+        </a>
+        <a class="resource-card" href="https://hrtos.com/docs/system/index.html">
+          <div class="card-top"><h3>系统运行机制</h3><span class="card-tag">SYSTEM ↗</span></div>
+          <p>通过调度流程、中断流程和上下文切换等内容，了解系统关键运行路径。</p>
+        </a>
+        <a class="resource-card" href="https://hrtos.com/docs/system-view/index.html">
+          <div class="card-top"><h3>系统可视化</h3><span class="card-tag">SYSTEM VIEW ↗</span></div>
+          <p>以流程图和结构视图呈现任务生命周期、调度周期、内存布局与时间系统。</p>
+        </a>
+        <a class="resource-card" href="https://hrtos.com/docs/learn/index.html">
+          <div class="card-top"><h3>RTOS 学习资料</h3><span class="card-tag">LEARNING ↗</span></div>
+          <p>了解 RTOS 基础概念、任务调度、中断、上下文切换及实时系统相关知识。</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature-section">
+    <div class="container">
+      <h2 class="section-heading">开发参考</h2>
+      <p class="section-intro">面向实际开发，快速查找接口说明、功能模块与可运行示例。</p>
+      <div class="resource-grid">
+        <a class="resource-card" href="https://hrtos.com/docs/api_v2/index.html">
+          <div class="card-top"><h3>API 参考手册</h3><span class="card-tag">API REFERENCE ↗</span></div>
+          <p>按内核、任务管理、时间管理、等待机制、同步通信与中断接口分类查阅 API。</p>
+        </a>
+        <a class="resource-card" href="https://hrtos.com/docs/examples/index.html">
+          <div class="card-top"><h3>示例工程</h3><span class="card-tag">EXAMPLES ↗</span></div>
+          <p>通过任务执行、调度、通信、时间控制、系统资源与中断等示例理解接口用法。</p>
+        </a>
+        <a class="resource-card" href="https://hrtos.com/docs/modules/index.html">
+          <div class="card-top"><h3>系统功能模块</h3><span class="card-tag">MODULES ↗</span></div>
+          <p>了解任务、调度、时间、等待、同步通信与内存管理等模块的功能组织。</p>
+        </a>
+        <a class="resource-card" href="https://hrtos.com/docs/why/index.html">
+          <div class="card-top"><h3>实时系统设计理念</h3><span class="card-tag">WHY RTOS ↗</span></div>
+          <p>从实时问题、确定性约束及 RTOS 与通用操作系统的差异理解设计出发点。</p>
+        </a>
+      </div>
+      <div class="note">
+        建议初次接触 HRTOS 的开发者先阅读文档中心与内核开发指南，再结合 API 参考和示例工程进行实践。
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-heading">版本与项目资源</h2>
+      <p class="section-intro">获取 HRTOS 发布版本，并通过官方入口了解项目与配套资源。</p>
+      <div class="quick-grid">
+        <a class="quick-link" href="https://hrtos.com/download/index.html">
+          <strong>版本下载</strong><span>HRTOS 各版本及相关发布包</span>
+        </a>
+        <a class="quick-link" href="https://hrtos.com/">
+          <strong>官方网站</strong><span>HRTOS 官方网站首页</span>
+        </a>
+        <a class="quick-link" href="https://hrtos.com/docs/">
+          <strong>在线文档</strong><span>进入官方在线技术资料</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="container">
+      <h2>从了解系统，到开始实践</h2>
+      <p>访问 HRTOS 官方网站，获取持续完善的 8051 操作系统技术资料。</p>
+      <div class="button-group">
+        <a class="btn btn-primary" href="https://hrtos.com/">访问 HRTOS 官方网站</a>
+        <a class="btn btn-secondary" href="https://hrtos.com/docs/index.html">进入技术文档中心</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>HRTOS · 始于 2017</p>
+    <p>面向 8051 的实时操作系统项目</p>
+    <p>
+      <a href="index.html">中文介绍首页</a> ·
+      <a href="about.html">关于项目</a> ·
+      <a href="journey.html">项目历程</a> ·
+      <a href="https://hrtos.com/">官方网站</a>
+    </p>
+  </div>
+</footer>
+</body>
+</html>
